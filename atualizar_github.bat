@@ -8,11 +8,11 @@ echo =========================================
 echo.
 
 echo 1. Puxando alteracoes do servidor (git pull)...
-"C:\Program Files\Git\cmd\git.exe" pull origin main
+git pull origin main
 
 echo.
 echo 2. Verificando alteracoes locais nos arquivos...
-"C:\Program Files\Git\cmd\git.exe" status --porcelain > "%temp%\git_status.tmp"
+git status --porcelain > "%temp%\git_status.tmp"
 for %%I in ("%temp%\git_status.tmp") do set FS=%%~zI
 
 if %FS% EQU 0 (
@@ -32,15 +32,15 @@ echo Alteracoes encontradas! Preparando para enviar...
 echo.
 
 echo 3. Adicionando arquivos alterados (git add)...
-"C:\Program Files\Git\cmd\git.exe" add .
+git add .
 
 echo.
 echo 4. Criando commit das alteracoes...
-"C:\Program Files\Git\cmd\git.exe" commit -m "Atualizacao automatica via script"
+git commit -m "Atualizacao automatica via script"
 
 echo.
 echo 5. Enviando para o GitHub (git push)...
-"C:\Program Files\Git\cmd\git.exe" push origin main
+git push origin main
 
 echo.
 echo =========================================
