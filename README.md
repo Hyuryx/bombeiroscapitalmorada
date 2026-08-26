@@ -22,4 +22,3 @@ Envie a alteração ao GitHub.
 
 
 vercel dev
-
