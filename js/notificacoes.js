@@ -98,7 +98,23 @@ async function fetchAvisosData() {
     }).format(new Date(valor));
   }
 
-  const avisosFechados = new Set();
+  function obterAvisosFechados() {
+    try {
+      const salvos = localStorage.getItem('avisosFechados');
+      return salvos ? new Set(JSON.parse(salvos)) : new Set();
+    } catch (e) {
+      return new Set();
+    }
+  }
+
+  const avisosFechados = obterAvisosFechados();
+
+  function salvarAvisoFechado(id) {
+    avisosFechados.add(id);
+    try {
+      localStorage.setItem('avisosFechados', JSON.stringify([...avisosFechados]));
+    } catch (e) {}
+  }
 
   function montarAviso(aviso) {
     const elemento = document.createElement("article");
@@ -155,7 +171,7 @@ async function fetchAvisosData() {
       .querySelector(".notificacao-fechar")
       .addEventListener("click", () => {
         elemento.style.display = "none";
-        avisosFechados.add(aviso.id); // Registra que o usuário fechou
+        salvarAvisoFechado(aviso.id); // Registra que o usuário fechou e salva no localStorage
       });
 
     return elemento;

@@ -146,6 +146,24 @@ app.post("/api/avisos", (req, res) => {
   }
 });
 
+app.post("/api/auth", (req, res) => {
+  try {
+    const { password } = req.body;
+    
+    // Senha padrão local (pode ser "HONRA" ou aceitar qualquer uma se for isLocal, mas vamos exigir "HONRA" para consistência)
+    const MASTER_PASSWORD = process.env.MASTER_PASSWORD || "HONRA";
+
+    if (password === MASTER_PASSWORD) {
+      res.setHeader("Set-Cookie", "auth_token=autenticado_com_sucesso; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax");
+      res.status(200).json({ sucesso: true, mensagem: "Autenticado com sucesso" });
+    } else {
+      res.status(401).json({ sucesso: false, erro: "Senha incorreta." });
+    }
+  } catch (erro) {
+    res.status(500).json({ erro: "Erro interno no servidor local." });
+  }
+});
+
 app.listen(PORTA, "127.0.0.1", () => {
   garantirEstrutura();
 
