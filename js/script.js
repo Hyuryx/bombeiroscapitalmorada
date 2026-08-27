@@ -452,44 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener(evt, resetInactivityTimer)
         );
 
-        // Verifica se já está logado via cookie
-        if (document.cookie.includes('auth_token=autenticado_com_sucesso')) {
-            const lastActivity = localStorage.getItem('cbm_last_activity');
-            const now = Date.now();
-            
-            // Se passou mais tempo do que o limite de inatividade desde a última vez
-            if (lastActivity && (now - parseInt(lastActivity) > INACTIVITY_LIMIT)) {
-                document.body.classList.add('locked');
-                const digitalClock = document.getElementById('digital-clock');
-                if (digitalClock) digitalClock.style.display = 'none';
-                document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                if (loginScreen) {
-                    loginScreen.style.display = 'flex';
-                    loginScreen.style.opacity = '1';
-                    loginScreen.style.visibility = 'visible';
-                }
-            } else {
-                isUnlocked = true;
-                loginScreen.style.display = 'none';
-                document.body.classList.remove('locked');
-                const digitalClock = document.getElementById('digital-clock');
-                if (digitalClock) digitalClock.style.display = 'block';
-                startTimers();
-                localStorage.setItem('cbm_last_activity', now);
-                setTimeout(() => {
-                    window.dispatchEvent(new CustomEvent('tabChanged', { detail: { targetId: 'login-event' } }));
-                }, 500);
-            }
-        } else {
-            // Inicia bloqueado por padrão
-            document.body.classList.add('locked');
-            const digitalClock = document.getElementById('digital-clock');
-            if (digitalClock) digitalClock.style.display = 'none';
-            if (loginScreen) {
-                loginScreen.style.display = 'flex';
-                loginScreen.style.opacity = '1';
-                loginScreen.style.visibility = 'visible';
-            }
+        // Inicia bloqueado por padrão (F5, etc) para segurança máxima
+        document.body.classList.add('locked');
+        const digitalClock = document.getElementById('digital-clock');
+        if (digitalClock) digitalClock.style.display = 'none';
+        if (loginScreen) {
+            loginScreen.style.display = 'flex';
+            loginScreen.style.opacity = '1';
+            loginScreen.style.visibility = 'visible';
         }
 
         async function handleLogin() {
