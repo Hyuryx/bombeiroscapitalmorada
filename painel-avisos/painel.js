@@ -552,6 +552,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loginPassword.value = '';
             loginError.style.display = 'none';
             stopTimers();
+            // Remove o cookie para garantir que o F5 não burle o bloqueio
+            document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
 
         function startTimers() {
@@ -569,6 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isUnlocked) {
                 clearTimeout(inactivityTimer);
                 inactivityTimer = setTimeout(lockScreen, INACTIVITY_LIMIT);
+                localStorage.setItem('cbm_last_activity', Date.now());
             }
         }
 
@@ -578,12 +581,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Verifica se já está logado via cookie
         if (document.cookie.includes('auth_token=autenticado_com_sucesso')) {
-            isUnlocked = true;
-            loginScreen.style.display = 'none';
-            document.body.classList.remove('locked');
-            const digitalClock = document.getElementById('digital-clock');
-            if (digitalClock) digitalClock.style.display = 'block';
-            startTimers();
+            const lastActivity = localStorage.getItem('cbm_last_activity');
+            const now = Date.now();
+            
+            if (lastActivity && (now - parseInt(lastActivity) > INACTIVITY_LIMIT)) {
+                document.body.classList.add("locked");
+                const digitalClock = document.getElementById("digital-clock");
+                if (digitalClock) digitalClock.style.display = "none";
+                document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            } else {
+                isUnlocked = true;
+                loginScreen.style.display = 'none';
+                document.body.classList.remove('locked');
+                const digitalClock = document.getElementById('digital-clock');
+                if (digitalClock) digitalClock.style.display = 'block';
+                startTimers();
+                localStorage.setItem('cbm_last_activity', now);
+            }
         } else {
             // Inicia bloqueado por padrão
             document.body.classList.add("locked");
