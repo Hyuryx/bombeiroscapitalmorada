@@ -2,13 +2,22 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Atualizar GitHub",
+      "label": "⬇️ Baixar Atualizacoes do GitHub",
       "type": "shell",
-      "command": ".\\atualizar_github.bat",
-      "group": {
-        "kind": "build",
-        "isDefault": true
+      "command": ".\\baixar_atualizacoes.bat",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true
       },
+      "problemMatcher": []
+    },
+    {
+      "label": "⬆️ Enviar Atualizacoes para o GitHub",
+      "type": "shell",
+      "command": ".\\enviar_atualizacoes.bat",
+      "group": "build",
       "presentation": {
         "reveal": "always",
         "panel": "new",

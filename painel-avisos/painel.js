@@ -579,8 +579,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener(evt, resetInactivityTimer)
         );
 
+        const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('login') === 'success') {
+        
+        if (isLocalHost || urlParams.get('login') === 'success') {
             // Remove o parâmetro da URL sem recarregar a página
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
