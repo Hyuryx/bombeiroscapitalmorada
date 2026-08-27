@@ -589,6 +589,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const digitalClock = document.getElementById("digital-clock");
                 if (digitalClock) digitalClock.style.display = "none";
                 document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                if (loginScreen) {
+                    loginScreen.style.display = 'flex';
+                    loginScreen.style.opacity = '1';
+                    loginScreen.style.visibility = 'visible';
+                }
             } else {
                 isUnlocked = true;
                 loginScreen.style.display = 'none';
@@ -603,6 +608,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.classList.add("locked");
             const digitalClock = document.getElementById("digital-clock");
             if (digitalClock) digitalClock.style.display = "none";
+            if (loginScreen) {
+                loginScreen.style.display = 'flex';
+                loginScreen.style.opacity = '1';
+                loginScreen.style.visibility = 'visible';
+            }
         }
 
         async function handleLogin() {
