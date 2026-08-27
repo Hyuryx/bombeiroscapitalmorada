@@ -378,10 +378,130 @@ document.addEventListener('DOMContentLoaded', () => {
         switchGlobalView(activeTab);
     }
 
-    // Disparar evento de login após o carregamento da página protegida pelo middleware
-    setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('tabChanged', { detail: { targetId: 'login-event' } }));
-    }, 500);
+    // Lógica da Tela de Login / Bloqueio
+    const loginScreen = document.getElementById('login-screen');
+    const loginPassword = document.getElementById('login-password');
+    const loginSubmit = document.getElementById('login-submit');
+    const loginError = document.getElementById('login-error');
+
+    if (loginScreen) {
+        // Relógio da tela de login
+        const loginTime = document.getElementById('login-time');
+        const loginDate = document.getElementById('login-date');
+        
+        function updateLoginClock() {
+            if (loginTime && loginDate) {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                loginTime.textContent = `${hours}:${minutes}:${seconds}`;
+                
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                loginDate.textContent = now.toLocaleDateString('pt-BR', options);
+            }
+        }
+        setInterval(updateLoginClock, 1000);
+        updateLoginClock();
+
+        let inactivityTimer;
+        let absoluteTimer;
+        const INACTIVITY_LIMIT = 3 * 60 * 1000; // 3 min
+        const ABSOLUTE_LIMIT = 6 * 60 * 1000; // 6 min
+
+        let isUnlocked = false;
+
+        function lockScreen() {
+            isUnlocked = false;
+            loginScreen.style.display = 'flex';
+            // Usa um pequeno delay para a transição de opacidade funcionar se estava 'none'
+            setTimeout(() => {
+                loginScreen.style.opacity = '1';
+                loginScreen.style.visibility = 'visible';
+            }, 10);
+            document.body.classList.add('locked');
+            const digitalClock = document.getElementById('digital-clock');
+            if (digitalClock) digitalClock.style.display = 'none';
+            loginPassword.value = '';
+            loginError.style.display = 'none';
+            stopTimers();
+        }
+
+        function startTimers() {
+            stopTimers();
+            inactivityTimer = setTimeout(lockScreen, INACTIVITY_LIMIT);
+            absoluteTimer = setTimeout(lockScreen, ABSOLUTE_LIMIT);
+        }
+
+        function stopTimers() {
+            clearTimeout(inactivityTimer);
+            clearTimeout(absoluteTimer);
+        }
+
+        function resetInactivityTimer() {
+            if (isUnlocked) {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(lockScreen, INACTIVITY_LIMIT);
+            }
+        }
+
+        ['mousemove', 'mousedown', 'keypress', 'touchmove', 'scroll'].forEach(evt => 
+            document.addEventListener(evt, resetInactivityTimer)
+        );
+
+        // Inicia bloqueado por padrão (F5 / Nova aba)
+        document.body.classList.add('locked');
+        const digitalClock = document.getElementById('digital-clock');
+        if (digitalClock) digitalClock.style.display = 'none';
+        async function handleLogin() {
+            const btn = document.getElementById('login-submit');
+            if (btn) btn.disabled = true;
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: loginPassword.value })
+                });
+
+                if (response.ok) {
+                    // Senha Correta
+                    isUnlocked = true;
+                    loginError.style.display = 'none';
+                    loginScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loginScreen.style.display = 'none';
+                        document.body.classList.remove('locked');
+                        const digitalClock = document.getElementById('digital-clock');
+                        if (digitalClock) digitalClock.style.display = 'block';
+                        startTimers();
+                        if (btn) btn.disabled = false;
+                        
+                        // Disparar evento especial de login para mostrar o aviso
+                        window.dispatchEvent(new CustomEvent('tabChanged', { detail: { targetId: 'login-event' } }));
+                    }, 500);
+                } else {
+                    // Senha Incorreta
+                    loginError.style.display = 'block';
+                    loginPassword.value = '';
+                    loginPassword.focus();
+                    if (btn) btn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Erro na autenticação:", error);
+                loginError.textContent = "Erro ao conectar com o servidor.";
+                loginError.style.display = 'block';
+                if (btn) btn.disabled = false;
+            }
+        }
+
+        if (loginSubmit) loginSubmit.addEventListener('click', handleLogin);
+        if (loginPassword) loginPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleLogin();
+            }
+        });
+    }
 });
 
 // Gallery Folders Logic
