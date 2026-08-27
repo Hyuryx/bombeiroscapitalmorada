@@ -449,10 +449,24 @@ document.addEventListener('DOMContentLoaded', () => {
             document.addEventListener(evt, resetInactivityTimer)
         );
 
-        // Inicia bloqueado por padrão (F5 / Nova aba)
-        document.body.classList.add('locked');
-        const digitalClock = document.getElementById('digital-clock');
-        if (digitalClock) digitalClock.style.display = 'none';
+        // Verifica se já está logado via cookie
+        if (document.cookie.includes('auth_token=autenticado_com_sucesso')) {
+            isUnlocked = true;
+            loginScreen.style.display = 'none';
+            document.body.classList.remove('locked');
+            const digitalClock = document.getElementById('digital-clock');
+            if (digitalClock) digitalClock.style.display = 'block';
+            startTimers();
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('tabChanged', { detail: { targetId: 'login-event' } }));
+            }, 500);
+        } else {
+            // Inicia bloqueado por padrão
+            document.body.classList.add('locked');
+            const digitalClock = document.getElementById('digital-clock');
+            if (digitalClock) digitalClock.style.display = 'none';
+        }
+
         async function handleLogin() {
             const btn = document.getElementById('login-submit');
             if (btn) btn.disabled = true;

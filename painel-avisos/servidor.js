@@ -154,7 +154,7 @@ app.post("/api/auth", (req, res) => {
     const MASTER_PASSWORD = process.env.MASTER_PASSWORD || "HONRA";
 
     if (password === MASTER_PASSWORD) {
-      res.setHeader("Set-Cookie", "auth_token=autenticado_com_sucesso; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax");
+      res.setHeader("Set-Cookie", "auth_token=autenticado_com_sucesso; Path=/; Max-Age=604800; SameSite=Lax");
       res.status(200).json({ sucesso: true, mensagem: "Autenticado com sucesso" });
     } else {
       res.status(401).json({ sucesso: false, erro: "Senha incorreta." });

@@ -27,10 +27,8 @@ module.exports = async (req, res) => {
     // Aceita qualquer senha no ambiente local ou verifica a senha correta em produção
     if (isLocal || password === MASTER_PASSWORD) {
       // Se a senha estiver correta, criamos um cookie seguro
-      // HttpOnly: O JS do navegador não consegue ler (protege contra roubo via XSS)
-      // Path=/: Vale para o site todo (inclusive para /api/avisos)
-      // Max-Age: Duração da sessão (ex: 7 dias)
-      res.setHeader("Set-Cookie", "auth_token=autenticado_com_sucesso; HttpOnly; Path=/; Max-Age=604800; SameSite=Lax");
+      // Sem HttpOnly para que o JS (script.js) possa ler e manter o site desbloqueado na Vercel e local
+      res.setHeader("Set-Cookie", "auth_token=autenticado_com_sucesso; Path=/; Max-Age=604800; SameSite=Lax");
       
       return res.status(200).json({ sucesso: true, mensagem: "Autenticado com sucesso" });
     } else {
