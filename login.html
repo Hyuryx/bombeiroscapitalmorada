@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portal CBM</title>
+    <link rel="stylesheet" href="/css/style.css?v=10">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/assets/iconesite/icone.png?v=2">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #0d1117; }
+        /* Garantir que a tela de login fique 100% visível sempre */
+        #login-screen {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    </style>
+</head>
+<body class="locked">
+    <div id="login-screen">
+        <div class="login-background"></div>
+        <div class="login-container">
+            <img src="/assets/fotos/logo-capital.png" alt="Logo Capital" class="login-logo">
+            <div id="login-clock" style="text-align: center; color: white; margin-bottom: 20px;">
+                <div id="login-time" style="font-size: 3rem; font-weight: 800; letter-spacing: 2px; line-height: 1;">00:00:00</div>
+                <div id="login-date" style="font-size: 1rem; color: #ccc; margin-top: 5px;">Data</div>
+            </div>
+            <h2>PORTAL CBM</h2>
+            <div class="login-input-group">
+                <input type="password" id="login-password" placeholder="Digite a senha de acesso..." autocomplete="off">
+                <button id="login-submit">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </div>
+            <p id="login-error" style="display: none;">Senha incorreta. Tente novamente.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Relógio da tela de login
+        function updateLoginClock() {
+            const timeEl = document.getElementById('login-time');
+            const dateEl = document.getElementById('login-date');
+            if(!timeEl || !dateEl) return;
+            
+            const now = new Date();
+            timeEl.textContent = now.toLocaleTimeString('pt-BR');
+            dateEl.textContent = now.toLocaleDateString('pt-BR', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        setInterval(updateLoginClock, 1000);
+        updateLoginClock();
+
+        // Lógica de Login
+        const passInput = document.getElementById('login-password');
+        const submitBtn = document.getElementById('login-submit');
+        const errorEl = document.getElementById('login-error');
+
+        async function handleLogin() {
+            submitBtn.disabled = true;
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: passInput.value })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Retorna para a página que o usuário estava tentando acessar
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirectTo = urlParams.get('continue') || '/';
+                        const redirectUrl = new URL(redirectTo, window.location.origin);
+                        redirectUrl.searchParams.set('login', 'success');
+                        window.location.href = redirectUrl.toString();
+                    } else {
+                        errorEl.style.display = 'block';
+                        passInput.value = '';
+                        passInput.focus();
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        submitBtn.addEventListener('click', handleLogin);
+        passInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+        passInput.focus();
+    </script>
+</body>
+</html>

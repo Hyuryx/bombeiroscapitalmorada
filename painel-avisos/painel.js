@@ -579,14 +579,32 @@ document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener(evt, resetInactivityTimer)
         );
 
-        // Inicia bloqueado por padrão (F5, etc) para segurança máxima
-        document.body.classList.add("locked");
-        const digitalClock = document.getElementById("digital-clock");
-        if (digitalClock) digitalClock.style.display = "none";
-        if (loginScreen) {
-            loginScreen.style.display = 'flex';
-            loginScreen.style.opacity = '1';
-            loginScreen.style.visibility = 'visible';
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('login') === 'success') {
+            // Remove o parâmetro da URL sem recarregar a página
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+            
+            // Inicia desbloqueado
+            isUnlocked = true;
+            if (loginScreen) {
+                loginScreen.style.display = 'none';
+            }
+            document.body.classList.remove('locked');
+            const digitalClock = document.getElementById('digital-clock');
+            if (digitalClock) digitalClock.style.display = 'block';
+            startTimers();
+            localStorage.setItem('cbm_last_activity', Date.now());
+        } else {
+            // Inicia bloqueado por padrão (F5, etc) para segurança máxima
+            document.body.classList.add("locked");
+            const digitalClock = document.getElementById("digital-clock");
+            if (digitalClock) digitalClock.style.display = "none";
+            if (loginScreen) {
+                loginScreen.style.display = 'flex';
+                loginScreen.style.opacity = '1';
+                loginScreen.style.visibility = 'visible';
+            }
         }
 
         async function handleLogin() {
