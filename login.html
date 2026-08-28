@@ -75,7 +75,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    if (data.success) {
+                    if (data.sucesso || data.success) {
                         // Retorna para a página que o usuário estava tentando acessar
                         const urlParams = new URLSearchParams(window.location.search);
                         const redirectTo = urlParams.get('continue') || '/';
