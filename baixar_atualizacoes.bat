@@ -2,6 +2,11 @@
 chcp 65001 > nul
 cd /d "%~dp0"
 
+where git >nul 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    set "PATH=%PATH%;C:\Program Files\Git\cmd;C:\Program Files\Git\bin"
+)
+
 echo =========================================
 echo    Baixando atualizacoes do GitHub...
 echo =========================================

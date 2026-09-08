@@ -2,17 +2,32 @@
 chcp 65001 > nul
 cd /d "%~dp0"
 
+where git >nul 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    set "PATH=%PATH%;C:\Program Files\Git\cmd;C:\Program Files\Git\bin"
+)
+
 echo =========================================
 echo    Enviando suas alteracoes para o GitHub...
 echo =========================================
 echo.
 
 echo 1. Verificando alteracoes locais...
-git status --porcelain > "%temp%\git_status.tmp"
-for %%I in ("%temp%\git_status.tmp") do set FS=%%~zI
+set FS=0
+set AHEAD=0
 
-if %FS% EQU 0 (
-    del "%temp%\git_status.tmp" 2>nul
+git status --porcelain > "%temp%\git_status.tmp" 2>nul
+for %%I in ("%temp%\git_status.tmp") do set FS=%%~zI
+del "%temp%\git_status.tmp" 2>nul
+
+git rev-list origin/main..HEAD > "%temp%\git_ahead.tmp" 2>nul
+for %%I in ("%temp%\git_ahead.tmp") do set AHEAD=%%~zI
+del "%temp%\git_ahead.tmp" 2>nul
+
+if not defined FS set FS=0
+if not defined AHEAD set AHEAD=0
+
+if %FS% EQU 0 if %AHEAD% EQU 0 (
     echo.
     echo =========================================
     echo [INFORMACAO] Nenhuma alteracao nova foi encontrada para enviar.
@@ -22,14 +37,16 @@ if %FS% EQU 0 (
     pause
     exit /b 0
 )
-del "%temp%\git_status.tmp" 2>nul
 
-echo 2. Adicionando arquivos alterados...
-git add .
-
-echo.
-echo 3. Criando commit das alteracoes...
-git commit -m "Atualizacao automatica via script"
+if %FS% GTR 0 (
+    echo 2. Adicionando arquivos alterados...
+    git add .
+    echo.
+    echo 3. Criando commit das alteracoes...
+    git commit -m "Atualizacao automatica via script"
+) else (
+    echo [INFORMACAO] Alteracoes ja salvas localmente, enviando ao GitHub...
+)
 
 echo.
 echo 4. Baixando possiveis alteracoes novas do seu amigo (git pull)...
