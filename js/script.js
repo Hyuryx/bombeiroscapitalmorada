@@ -756,5 +756,59 @@ document.addEventListener('DOMContentLoaded', () => {
             updateEffectsUI(newNoEffects);
         });
     }
+
+    // =========================================================================
+    // Modal Aviso de Preços / Eventos (Abertura Inicial e ao Atualizar F5)
+    // =========================================================================
+    const modalPrecos = document.getElementById('modal-evento-precos');
+    if (modalPrecos) {
+        const closeBtn = document.getElementById('modal-evento-close');
+        const backdrop = modalPrecos.querySelector('.modal-evento-backdrop');
+
+        function openModalPrecos() {
+            modalPrecos.classList.add('active');
+            modalPrecos.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModalPrecos() {
+            modalPrecos.classList.remove('active');
+            modalPrecos.setAttribute('aria-hidden', 'true');
+        }
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModalPrecos);
+        if (backdrop) backdrop.addEventListener('click', closeModalPrecos);
+        modalPrecos.addEventListener('click', (e) => {
+            if (e.target === modalPrecos) closeModalPrecos();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalPrecos.classList.contains('active')) {
+                closeModalPrecos();
+            }
+        });
+
+        function checkAndOpenModalPrecos() {
+            const loginScreenEl = document.getElementById('login-screen');
+            const isLocked = document.body.classList.contains('locked') || 
+                (loginScreenEl && window.getComputedStyle(loginScreenEl).display !== 'none' && loginScreenEl.style.opacity !== '0');
+
+            if (isLocked) {
+                // Se a tela estiver bloqueada pelo login, aguarda o desbloqueio
+                const handleUnlock = (e) => {
+                    if (e.detail && e.detail.targetId === 'login-event') {
+                        window.removeEventListener('tabChanged', handleUnlock);
+                        setTimeout(openModalPrecos, 400);
+                    }
+                };
+                window.addEventListener('tabChanged', handleUnlock);
+            } else {
+                // Já desbloqueado ou sem tela de login (primeiro acesso ou F5)
+                setTimeout(openModalPrecos, 350);
+            }
+        }
+
+        checkAndOpenModalPrecos();
+    }
 });
+
 
