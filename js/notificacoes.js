@@ -417,6 +417,7 @@ async function carregarAvisosCursos() {
       "Resgate Aquático": { id: "curso-aquatico", selector: ".sidebar-nav li[data-target='curso-aquatico']" },
       "Resgate Montanha": { id: "curso-montanha", selector: ".sidebar-nav li[data-target='curso-montanha']" },
       "Paraquedismo": { id: "curso-paraquedismo", selector: ".sidebar-nav li[data-target='curso-paraquedismo']" },
+      "Evoluir": { id: "curso-evoluir", selector: ".sidebar-nav li[data-target='curso-evoluir']" },
       "Início": { id: "view-inicio", selector: ".nav-item[data-global-target='view-inicio']" },
       "Avisos Gerais": { id: "view-avisos", selector: ".nav-item[data-global-target='view-avisos']" },
       "Regras": { id: "view-regras", selector: ".nav-item[data-global-target='view-regras']" },
@@ -447,7 +448,7 @@ async function carregarAvisosCursos() {
         const el = document.getElementById(aba.id);
         if(el && !el.querySelector('.aviso-curso-banner')) {
           const temFim = aviso.fim && String(aviso.fim).trim() !== "" && String(aviso.fim) !== "null";
-          const isCurso = ["Curso de Piloto", "Resgate Aquático", "Resgate Montanha", "Paraquedismo"].includes(aviso.titulo);
+          const isCurso = ["Curso de Piloto", "Resgate Aquático", "Resgate Montanha", "Paraquedismo", "Evoluir"].includes(aviso.titulo);
           const tituloBanner = isCurso 
             ? "Há um aviso ativo para este curso. Veja a aba Avisos Gerais." 
             : "Há um aviso ativo para esta categoria.";
@@ -546,6 +547,7 @@ window.addEventListener('tabChanged', async (e) => {
       "Resgate Aquático": { id: "curso-aquatico" },
       "Resgate Montanha": { id: "curso-montanha" },
       "Paraquedismo": { id: "curso-paraquedismo" },
+      "Evoluir": { id: "curso-evoluir" },
       "Início": { id: "view-inicio" },
       "Avisos Gerais": { id: "view-avisos" },
       "Regras": { id: "view-regras" },
@@ -562,7 +564,7 @@ window.addEventListener('tabChanged', async (e) => {
     
     if (targetId === "login-event") {
       for (const aviso of avisosAtivos) {
-        const isCurso = ["Curso de Piloto", "Resgate Aquático", "Resgate Montanha", "Paraquedismo"].includes(aviso.titulo);
+        const isCurso = ["Curso de Piloto", "Resgate Aquático", "Resgate Montanha", "Paraquedismo", "Evoluir"].includes(aviso.titulo);
         if (isCurso && aviso.imagem) {
             avisoDestaque = aviso;
             break;

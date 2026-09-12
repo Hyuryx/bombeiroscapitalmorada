@@ -162,6 +162,15 @@
                                 <span>Paraquedismo</span>
                             </div>
                         </li>
+                        <li data-target="curso-evoluir" style="--active-color: #a855f7;">
+                            <svg class="anim-icon icon-evoluir" viewBox="0 0 24 24" stroke="#a855f7" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline class="evoluir-step1" points="17 11 12 6 7 11"></polyline>
+                                <polyline class="evoluir-step2" points="17 17 12 12 7 17"></polyline>
+                            </svg> 
+                            <div style="display: flex; flex-direction: column;">
+                                <span>Evoluir</span>
+                            </div>
+                        </li>
                     </ul>
 
                 </nav>
@@ -689,6 +698,460 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <section id="curso-evoluir" class="content-section">
+                    <header class="section-header">
+                        <h1>🚀 COMO EVOLUIR</h1>
+                        <p>Confira abaixo o tempo e os requisitos de cada promoção na corporação.</p>
+                    </header>
+
+                    <!-- Banner de Introdução com Efeito RGB -->
+                    <div class="card info-card rgb-card" style="margin-bottom: 25px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+                            <div>
+                                <h3 style="color: #fff; font-size: 1.35rem; display: flex; align-items: center; gap: 10px; margin: 0 0 8px 0;">
+                                    <span>🎖️</span> Plano de Carreira e Progressão Funcional
+                                </h3>
+                                <p style="color: #d1d5db; margin: 0; max-width: 850px; line-height: 1.6; font-size: 0.95rem;">
+                                    A evolução no Corpo de Bombeiros é conquistada através de <strong>tempo de serviço dedicado</strong>, <strong>conclusão dos cursos obrigatórios</strong> e <strong>reconhecimento por mérito operacional</strong>. Clique em qualquer card abaixo para abrir os detalhes completos no modal com os requisitos da patente.
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.35); padding: 8px 16px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.25rem; font-weight: 800; color: #60a5fa;">13</div>
+                                    <div style="font-size: 0.72rem; color: #93c5fd; text-transform: uppercase; font-weight: 600;">Etapas</div>
+                                </div>
+                                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); padding: 8px 16px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.25rem; font-weight: 800; color: #34d399;">10+</div>
+                                    <div style="font-size: 0.72rem; color: #6ee7b7; text-transform: uppercase; font-weight: 600;">Cursos</div>
+                                </div>
+                                <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); padding: 8px 16px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.25rem; font-weight: 800; color: #fbbf24;">3</div>
+                                    <div style="font-size: 0.72rem; color: #fde68a; text-transform: uppercase; font-weight: 600;">Mérito</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid com as 13 Etapas de Evolução -->
+                    <div class="evoluir-grid">
+                        
+                        <!-- 1. Contratação -> Aluno -->
+                        <div class="card-evoluir"
+                            data-titulo="Contratação ➔ Aluno"
+                            data-tempo="Imediato (Na Contratação)"
+                            data-tipo="Início de Carreira"
+                            data-cursos="Modulação e Atendimento Externo"
+                            data-detalhes="Ao ser contratado, você recebe a patente de <strong>Aluno</strong> e os cursos iniciais de <strong>Modulação e Atendimento Externo</strong>."
+                            data-obs="Início da formação básica e integração às rotinas do Corpo de Bombeiros."
+                            data-frase="O ponto de partida de uma nobre missão dedicada a salvar vidas com disciplina e honra.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-contrato">📌 Contratação</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 1/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Contratação ➔ Aluno</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Cursos Iniciais:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso verde">📻 Modulação</span>
+                                        <span class="evoluir-tag-curso verde">🚑 Atendimento Externo</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "O ponto de partida de uma nobre missão dedicada a salvar vidas com disciplina e honra."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 2. Aluno -> Soldado -->
+                        <div class="card-evoluir"
+                            data-titulo="Aluno ➔ Soldado"
+                            data-tempo="3 dias"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="Modulação, Atendimento Externo, Envio de Placas e CNH"
+                            data-detalhes="Ao se tornar Soldado, você deve se aperfeiçoar em <strong>Modulação e Atendimento Externo</strong>, além de enviar as <strong>Placas e a CNH</strong>."
+                            data-obs="Documentação obrigatória: Placas veiculares e Carteira Nacional de Habilitação (CNH)."
+                            data-frase="A base operacional e a prontidão para responder com eficiência em qualquer emergência da corporação.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 3 dias</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 2/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Aluno ➔ Soldado</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Requisitos & Documentos:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">📻 Modulação</span>
+                                        <span class="evoluir-tag-curso azul">🚑 Atendimento Externo</span>
+                                        <span class="evoluir-tag-curso dourado">📄 Envio de Placas & CNH</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "A base operacional e a prontidão para responder com eficiência em qualquer emergência da corporação."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 3. Soldado -> Cabo -->
+                        <div class="card-evoluir"
+                            data-titulo="Soldado ➔ Cabo"
+                            data-tempo="25 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="Mod/Ext OK"
+                            data-detalhes="Requisito de <strong>Mod/Ext OK</strong> (aprovação e validação prática de Modulação e Atendimento Externo)."
+                            data-obs="Cumprimento mínimo de 25 horas ativas com conduta disciplinar aprovada."
+                            data-frase="A graduação que solidifica a postura exemplar e a liderança sobre as primeiras linhas de combate.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 25 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 3/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Soldado ➔ Cabo</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Requisito Obrigatório:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso verde">✅ Mod/Ext OK</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "A graduação que solidifica a postura exemplar e a liderança sobre as primeiras linhas de combate."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 4. Cabo -> 3° Sargento -->
+                        <div class="card-evoluir"
+                            data-titulo="Cabo ➔ 3° Sargento"
+                            data-tempo="50 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="🧑✈️ Tripulante, 🪂 Paraquedista"
+                            data-detalhes="Requisitos: <strong>🧑✈️ Tripulante</strong> e <strong>🪂 Paraquedista</strong> devidamente concluídos e certificados."
+                            data-obs="Habilitação tática para operações aerotransportadas e salvamentos especiais."
+                            data-frase="Preparado para o salto e pronto para liderar guarnições nos cenários mais desafiadores.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 50 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 4/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Cabo ➔ 3° Sargento</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Cursos Obrigatórios:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">🧑✈️ Tripulante</span>
+                                        <span class="evoluir-tag-curso dourado">🪂 Paraquedista</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Preparado para o salto e pronto para liderar guarnições nos cenários mais desafiadores."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 5. 3° Sargento -> 2° Sargento -->
+                        <div class="card-evoluir"
+                            data-titulo="3° Sargento ➔ 2° Sargento"
+                            data-tempo="70 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="🚤 COER"
+                            data-detalhes="Requisito: <strong>🚤 COER</strong> (Comando de Operações de Emergência e Resgate)."
+                            data-obs="Domínio avançado em manobras de emergência, controle de viaturas especiais e suporte tático."
+                            data-frase="Capacitação tática de elite e comando eficiente em situações críticas de alta pressão.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 70 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 5/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">3° Sargento ➔ 2° Sargento</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Curso Obrigatório:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">🚤 COER</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Capacitação tática de elite e comando eficiente em situações críticas de alta pressão."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 6. 2° Sargento -> 1° Sargento -->
+                        <div class="card-evoluir"
+                            data-titulo="2° Sargento ➔ 1° Sargento"
+                            data-tempo="90 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="Instrutor - Externo/Modulação, Instrutor Geral"
+                            data-detalhes="Requisitos: <strong>Instrutor - Externo/Modulação</strong> e qualificação como <strong>Instrutor</strong>."
+                            data-obs="Transmissão de conhecimento e formação pedagógica de novos recrutas e soldados."
+                            data-frase="Ensinar é liderar: o conhecimento repassado com rigor e disciplina salva vidas no futuro.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 90 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 6/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">2° Sargento ➔ 1° Sargento</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Qualificações Obrigatórias:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso">🎓 Instrutor - Externo/Mod</span>
+                                        <span class="evoluir-tag-curso">🎖️ Instrutor</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Ensinar é liderar: o conhecimento repassado com rigor e disciplina salva vidas no futuro."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 7. 1° Sargento -> Sub-Tenente -->
+                        <div class="card-evoluir"
+                            data-titulo="1° Sargento ➔ Sub-Tenente"
+                            data-tempo="120 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="🌊 Resgate Aquático, Vistoria"
+                            data-detalhes="Requisitos: <strong>🌊 Resgate Aquático</strong> e formação de <strong>Vistoria</strong>."
+                            data-obs="A mais alta graduação das praças, sendo referência técnica e apoio primordial ao Comando."
+                            data-frase="A mais alta graduação das praças: guardião da disciplina e elo fundamental com o oficialato.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 120 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 7/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">1° Sargento ➔ Sub-Tenente</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Cursos Obrigatórios:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">🌊 Resgate Aquático</span>
+                                        <span class="evoluir-tag-curso dourado">📋 Vistoria</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "A mais alta graduação das praças: guardião da disciplina e elo fundamental com o oficialato."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 8. Sub-Tenente -> Aspirante -->
+                        <div class="card-evoluir"
+                            data-titulo="Sub-Tenente ➔ Aspirante"
+                            data-tempo="150 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="Instrutor - Resgate Aquático, Instrutor - COER"
+                            data-detalhes="Requisitos: <strong>Instrutor - Resgate Aquático</strong> e <strong>Instrutor - COER</strong>."
+                            data-obs="Ingresso no quadro de oficiais em formação, com atuação pedagógica de alto nível."
+                            data-frase="Transição para o oficialato unindo a bagagem operacional à liderança estratégica da tropa.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 150 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 8/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Sub-Tenente ➔ Aspirante</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Especializações de Instrução:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">🌊 Instrutor - Aquático</span>
+                                        <span class="evoluir-tag-curso">🚤 Instrutor - COER</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Transição para o oficialato unindo a bagagem operacional à liderança estratégica da tropa."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 9. Aspirante -> 2° Tenente -->
+                        <div class="card-evoluir"
+                            data-titulo="Aspirante ➔ 2° Tenente"
+                            data-tempo="180 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="⛰️ Resgate em Montanhas, Recrutador"
+                            data-detalhes="Requisitos: <strong>⛰️ Resgate em Montanhas</strong> e função ativa de <strong>Recrutador</strong>."
+                            data-obs="Oficial subalterno apto para o comando direto de ocorrências de grande porte e expansão do efetivo."
+                            data-frase="Nas alturas ou em solo, a liderança de pelotão pautada pela honra, coragem e eficácia.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 180 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 9/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">Aspirante ➔ 2° Tenente</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Requisitos Obrigatórios:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso verde">⛰️ Resgate Montanha</span>
+                                        <span class="evoluir-tag-curso dourado">🎯 Recrutador</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Nas alturas ou em solo, a liderança de pelotão pautada pela honra, coragem e eficácia."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 10. 2° Tenente -> 1° Tenente -->
+                        <div class="card-evoluir"
+                            data-titulo="2° Tenente ➔ 1° Tenente"
+                            data-tempo="210 horas"
+                            data-tipo="Tempo de Serviço"
+                            data-cursos="Instrutor - Resgate Montanha"
+                            data-detalhes="Requisito: <strong>Instrutor - Resgate Montanha</strong>."
+                            data-obs="Mestria consolidada em salvamentos verticais e capacidade de avaliação técnica da tropa."
+                            data-frase="Comando experiente e capacidade técnica para forjar novos especialistas de resgate vertical.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-tempo">⏱️ 210 horas</span>
+                                    <span style="font-size: 0.75rem; color: #9ca3af;">Etapa 10/13</span>
+                                </div>
+                                <div class="evoluir-card-titulo">2° Tenente ➔ 1° Tenente</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Qualificação de Instrução:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso verde">⛰️ Instrutor - Montanha</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "Comando experiente e capacidade técnica para forjar novos especialistas de resgate vertical."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 11. 1° Tenente -> Capitão -->
+                        <div class="card-evoluir merito"
+                            data-titulo="1° Tenente ➔ Capitão"
+                            data-tempo="Por Mérito"
+                            data-tipo="Promoção por Mérito"
+                            data-cursos="🚁 Resgate Aéreo, Instrutor - Tripulante"
+                            data-detalhes="Promoção: <strong>Por Mérito</strong>. Requisitos técnicos: <strong>🚁 Resgate Aéreo</strong> e <strong>Instrutor - Tripulante</strong>."
+                            data-obs="Comando de companhias operacionais, exigindo conduta militar irrepreensível e aprovação do Alto Comando."
+                            data-frase="O comando de companhia exige coragem, retidão moral e excelência operacional nos ares e em terra.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-merito">⭐ Por Mérito</span>
+                                    <span style="font-size: 0.75rem; color: #fbbf24;">Oficial Intermediário</span>
+                                </div>
+                                <div class="evoluir-card-titulo" style="color: #fbbf24;">⭐ 1° Tenente ➔ Capitão</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Requisitos Obrigatórios:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso azul">🚁 Resgate Aéreo</span>
+                                        <span class="evoluir-tag-curso">🧑✈️ Instrutor - Tripulante</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "O comando de companhia exige coragem, retidão moral e excelência operacional nos ares e em terra."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 12. Capitão -> Major -->
+                        <div class="card-evoluir merito"
+                            data-titulo="Capitão ➔ Major"
+                            data-tempo="Por Mérito"
+                            data-tipo="Promoção por Mérito"
+                            data-cursos="Comando de Batalhão & Mérito Operacional"
+                            data-detalhes="Promoção: <strong>Por Mérito</strong>. Atribuição de oficial superior para coordenação de batalhões e unidades operacionais."
+                            data-obs="Avaliação de liderança estratégica, responsabilidade na gestão do efetivo e lealdade institucional."
+                            data-frase="A condução estratégica da tropa com sabedoria, justiça e visão de futuro.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-merito">⭐ Por Mérito</span>
+                                    <span style="font-size: 0.75rem; color: #fbbf24;">Oficial Superior</span>
+                                </div>
+                                <div class="evoluir-card-titulo" style="color: #fbbf24;">⭐ Capitão ➔ Major</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Critério de Ascensão:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso dourado">⭐ Promoção por Mérito</span>
+                                        <span class="evoluir-tag-curso azul">🛡️ Comando de Batalhão</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "A condução estratégica da tropa com sabedoria, justiça e visão de futuro."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
+                        <!-- 13. Major -> Tenente-Coronel -->
+                        <div class="card-evoluir merito"
+                            data-titulo="Major ➔ Tenente-Coronel"
+                            data-tempo="Por Mérito"
+                            data-tipo="Promoção por Mérito"
+                            data-cursos="Estado-Maior & Alto Comando"
+                            data-detalhes="Promoção: <strong>Por Mérito</strong>. Alto oficialato encarregado da supervisão geral e apoio direto ao Comando Geral."
+                            data-obs="Decisão soberana do Comando Geral baseada no histórico exemplar de conduta e honra militar."
+                            data-frase="No topo da hierarquia, a honra de guiar homens e mulheres que juraram salvar vidas.">
+                            <div>
+                                <div class="evoluir-card-header">
+                                    <span class="evoluir-badge-merito">⭐ Por Mérito</span>
+                                    <span style="font-size: 0.75rem; color: #fbbf24;">Alto Comando</span>
+                                </div>
+                                <div class="evoluir-card-titulo" style="color: #fbbf24;">⭐ Major ➔ Tenente-Coronel</div>
+                                <div class="evoluir-cursos-box">
+                                    <div class="evoluir-cursos-label">Critério de Ascensão:</div>
+                                    <div class="evoluir-tags-container">
+                                        <span class="evoluir-tag-curso dourado">⭐ Promoção por Mérito</span>
+                                        <span class="evoluir-tag-curso">👑 Estado-Maior</span>
+                                    </div>
+                                </div>
+                                <div class="evoluir-frase-preview">
+                                    "No topo da hierarquia, a honra de guiar homens e mulheres que juraram salvar vidas."
+                                </div>
+                            </div>
+                            <button class="evoluir-btn-modal" type="button">
+                                <span>Ver Detalhes</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </button>
+                        </div>
+
                     </div>
                 </section>
                 <footer class="site-footer">
@@ -1475,6 +1938,56 @@
                 <h2 id="modal-title"></h2>
                 <p id="modal-desc"></p>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes - Como Evoluir (RGB em Volta) -->
+    <div id="modal-evoluir" class="modal-evoluir" aria-hidden="true">
+        <div class="modal-evoluir-container">
+            <button id="modal-evoluir-close" class="modal-evoluir-close" title="Fechar (ESC)" aria-label="Fechar">&times;</button>
+            <div class="modal-evoluir-header">
+                <span id="modal-evoluir-tag" class="evoluir-badge-tempo">Etapa</span>
+                <h2 id="modal-evoluir-titulo" class="modal-evoluir-titulo">Título da Promoção</h2>
+            </div>
+
+            <div class="modal-evoluir-section">
+                <div class="modal-evoluir-section-label">
+                    <span>⏱️</span> Tempo Mínimo de Serviço
+                </div>
+                <div class="modal-evoluir-box">
+                    <p id="modal-evoluir-tempo" style="color: #60a5fa; font-size: 1.1rem; font-weight: 700; margin: 0;"></p>
+                </div>
+            </div>
+
+            <div class="modal-evoluir-section">
+                <div class="modal-evoluir-section-label">
+                    <span>📚</span> Cursos & Especializações Obrigatórias
+                </div>
+                <div class="modal-evoluir-box">
+                    <div id="modal-evoluir-cursos" class="evoluir-tags-container"></div>
+                </div>
+            </div>
+
+            <div class="modal-evoluir-section" id="modal-evoluir-obs-wrapper">
+                <div class="modal-evoluir-section-label">
+                    <span>📋</span> Requisitos e Diretrizes Adicionais
+                </div>
+                <div class="modal-evoluir-box">
+                    <p id="modal-evoluir-detalhes" style="color: #cbd5e1; margin: 0; line-height: 1.5; font-size: 0.92rem;"></p>
+                    <p id="modal-evoluir-obs" style="color: #94a3b8; margin-top: 8px; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px;"></p>
+                </div>
+            </div>
+
+            <div class="modal-evoluir-frase-box">
+                <div style="font-size: 0.75rem; color: #c084fc; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px;">
+                    ✨ Lema & Compromisso Operacional:
+                </div>
+                <p id="modal-evoluir-frase" class="modal-evoluir-frase-texto"></p>
+            </div>
+
+            <button id="modal-evoluir-btn-fechar" class="modal-evoluir-footer-btn" type="button">
+                Entendido / Fechar
+            </button>
         </div>
     </div>
 

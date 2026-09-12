@@ -809,6 +809,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
         checkAndOpenModalPrecos();
     }
+
+    // =========================================================================
+    // Modal Interativo - Como Evoluir (RGB em Volta)
+    // =========================================================================
+    const modalEvoluir = document.getElementById('modal-evoluir');
+    if (modalEvoluir) {
+        const closeBtn = document.getElementById('modal-evoluir-close');
+        const footerBtn = document.getElementById('modal-evoluir-btn-fechar');
+        const tagEl = document.getElementById('modal-evoluir-tag');
+        const tituloEl = document.getElementById('modal-evoluir-titulo');
+        const tempoEl = document.getElementById('modal-evoluir-tempo');
+        const cursosContainer = document.getElementById('modal-evoluir-cursos');
+        const detalhesEl = document.getElementById('modal-evoluir-detalhes');
+        const obsEl = document.getElementById('modal-evoluir-obs');
+        const fraseEl = document.getElementById('modal-evoluir-frase');
+
+        function openModalEvoluir(card) {
+            const titulo = card.getAttribute('data-titulo') || '';
+            const tempo = card.getAttribute('data-tempo') || '';
+            const tipo = card.getAttribute('data-tipo') || '';
+            const cursosStr = card.getAttribute('data-cursos') || '';
+            const detalhes = card.getAttribute('data-detalhes') || '';
+            const obs = card.getAttribute('data-obs') || '';
+            const frase = card.getAttribute('data-frase') || '';
+
+            if (tituloEl) tituloEl.textContent = titulo;
+            if (tempoEl) tempoEl.textContent = tempo;
+            if (detalhesEl) detalhesEl.innerHTML = detalhes;
+            if (obsEl) obsEl.textContent = obs;
+            if (fraseEl) fraseEl.textContent = `"${frase}"`;
+
+            // Tag de Tipo/Tempo
+            if (tagEl) {
+                tagEl.className = '';
+                if (tipo.includes('Mérito') || tempo.includes('Mérito')) {
+                    tagEl.className = 'evoluir-badge-merito';
+                    tagEl.innerHTML = '⭐ ' + tempo;
+                    if (tempoEl) tempoEl.style.color = '#fbbf24';
+                } else if (tipo.includes('Contratação') || tempo.includes('Contratação')) {
+                    tagEl.className = 'evoluir-badge-contrato';
+                    tagEl.innerHTML = '📌 ' + tempo;
+                    if (tempoEl) tempoEl.style.color = '#34d399';
+                } else {
+                    tagEl.className = 'evoluir-badge-tempo';
+                    tagEl.innerHTML = '⏱️ ' + tempo;
+                    if (tempoEl) tempoEl.style.color = '#60a5fa';
+                }
+            }
+
+            // Gerar badges de cursos
+            if (cursosContainer) {
+                cursosContainer.innerHTML = '';
+                const cursosList = cursosStr.split(',').map(c => c.trim()).filter(Boolean);
+                cursosList.forEach(curso => {
+                    const badge = document.createElement('span');
+                    badge.className = 'evoluir-tag-curso';
+                    if (curso.includes('Modulação') || curso.includes('Externo') || curso.includes('Mod/Ext')) {
+                        badge.classList.add('verde');
+                    } else if (curso.includes('Aquático') || curso.includes('COER') || curso.includes('Aéreo') || curso.includes('Tripulante')) {
+                        badge.classList.add('azul');
+                    } else if (curso.includes('Mérito') || curso.includes('CNH') || curso.includes('Vistoria') || curso.includes('Recrutador')) {
+                        badge.classList.add('dourado');
+                    }
+                    badge.textContent = curso;
+                    cursosContainer.appendChild(badge);
+                });
+            }
+
+            modalEvoluir.classList.add('active');
+            modalEvoluir.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModalEvoluir() {
+            modalEvoluir.classList.remove('active');
+            modalEvoluir.setAttribute('aria-hidden', 'true');
+        }
+
+        document.querySelectorAll('.card-evoluir').forEach(card => {
+            card.addEventListener('click', () => {
+                openModalEvoluir(card);
+            });
+        });
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModalEvoluir);
+        if (footerBtn) footerBtn.addEventListener('click', closeModalEvoluir);
+
+        modalEvoluir.addEventListener('click', (e) => {
+            if (e.target === modalEvoluir) {
+                closeModalEvoluir();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalEvoluir.classList.contains('active')) {
+                closeModalEvoluir();
+            }
+        });
+    }
 });
 
 
