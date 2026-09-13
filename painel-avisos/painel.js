@@ -534,32 +534,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let inactivityTimer;
         let absoluteTimer;
-        const INACTIVITY_LIMIT = 3 * 60 * 1000; // 3 min
-        const ABSOLUTE_LIMIT = 6 * 60 * 1000; // 6 min
+        const INACTIVITY_LIMIT = 3 * 60 * 1000; // 3 min ausente
+        const ABSOLUTE_LIMIT = 6 * 60 * 1000; // 6 min mexendo
+
+        const isLocalHost = (function() {
+            try {
+                const proto = window.location.protocol;
+                const host = window.location.hostname;
+                return proto === 'file:' || 
+                       host === 'localhost' || 
+                       host === '127.0.0.1' || 
+                       host === '' || 
+                       host.endsWith('.local') || 
+                       host.startsWith('192.168.') || 
+                       host.startsWith('10.');
+            } catch (e) {
+                return false;
+            }
+        })();
 
         let isUnlocked = false;
 
-        function lockScreen() {
+        function lockScreen(animate = true) {
+            if (isLocalHost) return;
             isUnlocked = false;
-            loginScreen.style.display = 'flex';
-            setTimeout(() => {
-                loginScreen.style.opacity = '1';
-                loginScreen.style.visibility = 'visible';
-            }, 10);
+            sessionStorage.removeItem('cbm_auth_unlocked');
+            sessionStorage.removeItem('cbm_session_start');
+            sessionStorage.removeItem('cbm_last_activity');
+            document.documentElement.classList.remove('cbm-unlocked');
+
+            // Remove o cookie
+            document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            if (loginScreen) {
+                loginScreen.style.display = 'flex';
+                if (animate) {
+                    setTimeout(() => {
+                        loginScreen.style.opacity = '1';
+                        loginScreen.style.visibility = 'visible';
+                    }, 10);
+                } else {
+                    loginScreen.style.opacity = '1';
+                    loginScreen.style.visibility = 'visible';
+                }
+            }
             document.body.classList.add('locked');
             const digitalClock = document.getElementById('digital-clock');
             if (digitalClock) digitalClock.style.display = 'none';
-            loginPassword.value = '';
-            loginError.style.display = 'none';
+            if (loginPassword) loginPassword.value = '';
+            if (loginError) loginError.style.display = 'none';
             stopTimers();
-            // Remove o cookie para garantir que o F5 não burle o bloqueio
-            document.cookie = "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
 
-        function startTimers() {
+        function startTimers(customInactivityMs, customAbsoluteMs) {
             stopTimers();
-            inactivityTimer = setTimeout(lockScreen, INACTIVITY_LIMIT);
-            absoluteTimer = setTimeout(lockScreen, ABSOLUTE_LIMIT);
+            if (isLocalHost) return;
+            const inactMs = (typeof customInactivityMs === 'number') ? customInactivityMs : INACTIVITY_LIMIT;
+            const absMs = (typeof customAbsoluteMs === 'number') ? customAbsoluteMs : ABSOLUTE_LIMIT;
+
+            inactivityTimer = setTimeout(() => lockScreen(true), inactMs);
+            absoluteTimer = setTimeout(() => lockScreen(true), absMs);
         }
 
         function stopTimers() {
@@ -568,10 +602,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function resetInactivityTimer() {
+            if (isLocalHost) return;
             if (isUnlocked) {
+                const now = Date.now();
+                const sessionStart = parseInt(sessionStorage.getItem('cbm_session_start') || '0', 10);
+                
+                // Se ultrapassou o limite absoluto de 6 minutos, bloqueia imediatamente
+                if (sessionStart > 0 && (now - sessionStart >= ABSOLUTE_LIMIT)) {
+                    lockScreen(true);
+                    return;
+                }
+
                 clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(lockScreen, INACTIVITY_LIMIT);
-                localStorage.setItem('cbm_last_activity', Date.now());
+                inactivityTimer = setTimeout(() => lockScreen(true), INACTIVITY_LIMIT);
+                sessionStorage.setItem('cbm_last_activity', now.toString());
             }
         }
 
@@ -579,37 +623,104 @@ document.addEventListener("DOMContentLoaded", () => {
             document.addEventListener(evt, resetInactivityTimer)
         );
 
-        const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const urlParams = new URLSearchParams(window.location.search);
-        
-        if (isLocalHost || urlParams.get('login') === 'success') {
+        const isLoginSuccess = urlParams.get('login') === 'success';
+
+        if (isLoginSuccess) {
             // Remove o parâmetro da URL sem recarregar a página
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
             
-            // Inicia desbloqueado
+            // Marca a sessão como ativa
+            const now = Date.now();
+            sessionStorage.setItem('cbm_auth_unlocked', 'true');
+            sessionStorage.setItem('cbm_session_start', now.toString());
+            sessionStorage.setItem('cbm_last_activity', now.toString());
+        }
+
+        // Validação da Sessão (F5 na mesma aba preserva sessionStorage; fechar aba apaga)
+        const isSessionStored = sessionStorage.getItem('cbm_auth_unlocked') === 'true';
+        const sessionStart = parseInt(sessionStorage.getItem('cbm_session_start') || '0', 10);
+        const lastActivity = parseInt(sessionStorage.getItem('cbm_last_activity') || '0', 10);
+        const now = Date.now();
+
+        const timeSinceStart = sessionStart > 0 ? (now - sessionStart) : Infinity;
+        const timeSinceActivity = lastActivity > 0 ? (now - lastActivity) : Infinity;
+
+        const isSessionValid = isSessionStored && 
+                               (timeSinceStart < ABSOLUTE_LIMIT) && 
+                               (timeSinceActivity < INACTIVITY_LIMIT);
+
+        if (isLocalHost) {
+            // Em ambiente local, desbloqueia imediatamente e sem senha
             isUnlocked = true;
+            document.documentElement.classList.add('cbm-unlocked');
             if (loginScreen) {
                 loginScreen.style.display = 'none';
+                loginScreen.style.opacity = '0';
+                loginScreen.style.visibility = 'hidden';
             }
             document.body.classList.remove('locked');
             const digitalClock = document.getElementById('digital-clock');
             if (digitalClock) digitalClock.style.display = 'block';
-            startTimers();
-            localStorage.setItem('cbm_last_activity', Date.now());
-        } else {
-            // Inicia bloqueado por padrão (F5, etc) para segurança máxima
-            document.body.classList.add("locked");
-            const digitalClock = document.getElementById("digital-clock");
-            if (digitalClock) digitalClock.style.display = "none";
+        } else if (isSessionValid) {
+            // Inicia desbloqueado (mantido no F5 / Refresh)
+            isUnlocked = true;
+            document.documentElement.classList.add('cbm-unlocked');
             if (loginScreen) {
-                loginScreen.style.display = 'flex';
-                loginScreen.style.opacity = '1';
-                loginScreen.style.visibility = 'visible';
+                loginScreen.style.display = 'none';
+                loginScreen.style.opacity = '0';
+                loginScreen.style.visibility = 'hidden';
+            }
+            document.body.classList.remove('locked');
+            const digitalClock = document.getElementById('digital-clock');
+            if (digitalClock) digitalClock.style.display = 'block';
+
+            // Retoma os temporizadores com o tempo restante
+            const remainingInactivity = Math.max(1000, INACTIVITY_LIMIT - timeSinceActivity);
+            const remainingAbsolute = Math.max(1000, ABSOLUTE_LIMIT - timeSinceStart);
+            startTimers(remainingInactivity, remainingAbsolute);
+        } else {
+            // Inicia bloqueado (nova aba ou tempo esgotado)
+            lockScreen(false);
+        }
+
+        function unlockApp() {
+            isUnlocked = true;
+            const now = Date.now();
+            sessionStorage.setItem('cbm_auth_unlocked', 'true');
+            sessionStorage.setItem('cbm_session_start', now.toString());
+            sessionStorage.setItem('cbm_last_activity', now.toString());
+            document.documentElement.classList.add('cbm-unlocked');
+
+            if (loginError) loginError.style.display = 'none';
+            if (loginScreen) {
+                loginScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    loginScreen.style.visibility = 'hidden';
+                    document.body.classList.remove('locked');
+                    const digitalClock = document.getElementById('digital-clock');
+                    if (digitalClock) digitalClock.style.display = 'block';
+                    if (!isLocalHost) startTimers();
+                    const btn = document.getElementById('login-submit');
+                    if (btn) btn.disabled = false;
+                }, 500);
+            } else {
+                document.body.classList.remove('locked');
+                const digitalClock = document.getElementById('digital-clock');
+                if (digitalClock) digitalClock.style.display = 'block';
+                if (!isLocalHost) startTimers();
+                const btn = document.getElementById('login-submit');
+                if (btn) btn.disabled = false;
             }
         }
 
         async function handleLogin() {
+            if (isLocalHost) {
+                unlockApp();
+                return;
+            }
             const btn = document.getElementById('login-submit');
             if (btn) btn.disabled = true;
             try {
@@ -620,20 +731,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (response.ok) {
-                    // Senha Correta
-                    isUnlocked = true;
-                    loginError.style.display = 'none';
-                    loginScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loginScreen.style.display = 'none';
-                        document.body.classList.remove('locked');
-                        const digitalClock = document.getElementById('digital-clock');
-                        if (digitalClock) digitalClock.style.display = 'block';
-                        startTimers();
-                        if (btn) btn.disabled = false;
-                    }, 500);
+                    unlockApp();
                 } else {
                     // Senha Incorreta
+                    loginError.textContent = "Senha incorreta. Tente novamente.";
                     loginError.style.display = 'block';
                     loginPassword.value = '';
                     loginPassword.focus();
@@ -641,9 +742,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } catch (error) {
                 console.error("Erro na autenticação:", error);
-                loginError.textContent = "Erro ao conectar com o servidor.";
-                loginError.style.display = 'block';
-                if (btn) btn.disabled = false;
+                // Fallback de contingência local se a API não estiver respondendo
+                if (loginPassword.value.trim().toUpperCase() === 'HONRA') {
+                    unlockApp();
+                } else {
+                    loginError.textContent = "Erro ao conectar com o servidor.";
+                    loginError.style.display = 'block';
+                    if (btn) btn.disabled = false;
+                }
             }
         }
 

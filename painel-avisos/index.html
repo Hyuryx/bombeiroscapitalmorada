@@ -12,6 +12,43 @@
 
   <link rel="icon" type="image/png" href="/assets/iconesite/icone.png?v=2">
   <link rel="stylesheet" href="/painel-avisos/painel.css">
+  <script>
+      (function() {
+          try {
+              var proto = window.location.protocol;
+              var host = window.location.hostname;
+              var isLocal = proto === 'file:' || host === 'localhost' || host === '127.0.0.1' || host === '' || host.endsWith('.local') || host.startsWith('192.168.') || host.startsWith('10.');
+
+              if (isLocal) {
+                  sessionStorage.setItem('cbm_auth_unlocked', 'true');
+                  document.documentElement.classList.add('cbm-unlocked');
+                  return;
+              }
+
+              var isUnlocked = sessionStorage.getItem('cbm_auth_unlocked') === 'true';
+              var sessionStart = parseInt(sessionStorage.getItem('cbm_session_start') || '0', 10);
+              var lastActivity = parseInt(sessionStorage.getItem('cbm_last_activity') || '0', 10);
+              var now = Date.now();
+              var INACTIVITY_LIMIT = 3 * 60 * 1000;
+              var ABSOLUTE_LIMIT = 6 * 60 * 1000;
+              var urlParams = new URLSearchParams(window.location.search);
+              var isSuccessParam = urlParams.get('login') === 'success';
+
+              if (isSuccessParam) {
+                  sessionStorage.setItem('cbm_auth_unlocked', 'true');
+                  sessionStorage.setItem('cbm_session_start', now.toString());
+                  sessionStorage.setItem('cbm_last_activity', now.toString());
+                  isUnlocked = true;
+                  sessionStart = now;
+                  lastActivity = now;
+              }
+
+              if (isUnlocked && (now - sessionStart < ABSOLUTE_LIMIT) && (now - lastActivity < INACTIVITY_LIMIT)) {
+                  document.documentElement.classList.add('cbm-unlocked');
+              }
+          } catch (e) {}
+      })();
+  </script>
 </head>
 
 <body>

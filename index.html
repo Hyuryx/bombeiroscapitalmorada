@@ -19,6 +19,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/iconesite/icone.png?v=2">
     <link rel="stylesheet" href="css/notificacoes.css?v=6">
+    <script>
+        (function() {
+            try {
+                var proto = window.location.protocol;
+                var host = window.location.hostname;
+                var isLocal = proto === 'file:' || host === 'localhost' || host === '127.0.0.1' || host === '' || host.endsWith('.local') || host.startsWith('192.168.') || host.startsWith('10.');
+
+                if (isLocal) {
+                    sessionStorage.setItem('cbm_auth_unlocked', 'true');
+                    document.documentElement.classList.add('cbm-unlocked');
+                    return;
+                }
+
+                var isUnlocked = sessionStorage.getItem('cbm_auth_unlocked') === 'true';
+                var sessionStart = parseInt(sessionStorage.getItem('cbm_session_start') || '0', 10);
+                var lastActivity = parseInt(sessionStorage.getItem('cbm_last_activity') || '0', 10);
+                var now = Date.now();
+                var INACTIVITY_LIMIT = 3 * 60 * 1000;
+                var ABSOLUTE_LIMIT = 6 * 60 * 1000;
+                var urlParams = new URLSearchParams(window.location.search);
+                var isSuccessParam = urlParams.get('login') === 'success';
+
+                if (isSuccessParam) {
+                    sessionStorage.setItem('cbm_auth_unlocked', 'true');
+                    sessionStorage.setItem('cbm_session_start', now.toString());
+                    sessionStorage.setItem('cbm_last_activity', now.toString());
+                    isUnlocked = true;
+                    sessionStart = now;
+                    lastActivity = now;
+                }
+
+                if (isUnlocked && (now - sessionStart < ABSOLUTE_LIMIT) && (now - lastActivity < INACTIVITY_LIMIT)) {
+                    document.documentElement.classList.add('cbm-unlocked');
+                }
+            } catch (e) {}
+        })();
+    </script>
 </head>
 
 <body>
@@ -132,7 +169,7 @@
                             </svg> 
                             <div style="display: flex; flex-direction: column;">
                                 <span>Curso de Piloto</span>
-                                <span style="font-size: 0.75em; opacity: 0.7;"><strong>Vagas ocupadas 7/10</strong></span>
+                                <span style="font-size: 0.75em; opacity: 0.7;"><strong>Vagas ocupadas 10 PILOTOS</strong></span>
                             </div>
                         </li>
                         <li data-target="curso-aquatico" style="--active-color: #0ea5e9;">

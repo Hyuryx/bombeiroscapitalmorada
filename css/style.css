@@ -1370,6 +1370,10 @@ body {
 /* ==========================================================================
    TELA DE LOGIN / BLOQUEIO
    ========================================================================== */
+html.cbm-unlocked #login-screen {
+    display: none !important;
+}
+
 #login-screen {
     position: fixed;
     top: 0;
