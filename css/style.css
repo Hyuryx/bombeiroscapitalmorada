@@ -593,6 +593,32 @@ body {
     animation: pilotHover 2s infinite ease-in-out;
 }
 
+/* COER */
+@keyframes coerPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.12);
+    }
+}
+.sidebar-nav li:hover .icon-coer, .sidebar-nav li.active .icon-coer {
+    animation: coerPulse 1.8s infinite ease-in-out;
+}
+
+/* Tripulantes */
+@keyframes tripulantesFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+.sidebar-nav li:hover .icon-tripulantes, .sidebar-nav li.active .icon-tripulantes {
+    animation: tripulantesFloat 2s infinite ease-in-out;
+}
+
 /* Main Content */
 .main-content {
     flex-grow: 1;
@@ -1798,7 +1824,6 @@ body.no-effects *::after {
     text-shadow: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    filter: none !important;
 }
 
 body.no-effects #particles-js {

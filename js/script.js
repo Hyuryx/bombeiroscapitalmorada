@@ -78,12 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     sidebarNavItems.forEach(n => n.classList.remove('active'));
                     sidebarNavItems[0].classList.add('active');
                     
+                    const firstTargetId = sidebarNavItems[0].getAttribute('data-target');
                     contentSections.forEach(s => {
-                        s.classList.remove('active');
-                        s.style.display = 'none';
+                        if (s.id === firstTargetId) {
+                            s.classList.add('active');
+                            s.style.display = 'block';
+                        } else {
+                            s.classList.remove('active');
+                            s.style.display = 'none';
+                        }
                     });
-                    contentSections[0].classList.add('active');
-                    contentSections[0].style.display = 'block';
                 }
             } else {
                 view.classList.remove('active');
