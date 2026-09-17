@@ -82,8 +82,11 @@ textarea {
   margin-bottom: 24px;
   padding: 28px;
   border-radius: 18px;
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .card h2 {
@@ -202,6 +205,20 @@ textarea {
   border: 1px solid #dce1e6;
   border-left: 6px solid #28a745; /* Normal is green */
   border-radius: 12px;
+  background: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: slideInAviso 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.item-aviso:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes slideInAviso {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .item-aviso.prioridade-importante {

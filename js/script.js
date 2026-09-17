@@ -42,9 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
             "interactivity": {
                 "detect_on": "canvas",
                 "events": {
-                    "onhover": { "enable": false, "mode": "repulse" },
-                    "onclick": { "enable": false, "mode": "push" },
+                    "onhover": { "enable": true, "mode": ["grab", "repulse"] },
+                    "onclick": { "enable": true, "mode": "push" },
                     "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 0.8 } },
+                    "repulse": { "distance": 120, "duration": 0.4 },
+                    "push": { "particles_nb": 4 }
                 }
             },
             "retina_detect": true
@@ -114,7 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     globalNavItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            // Ripple Effect
+            if (!document.documentElement.classList.contains('no-effects')) {
+                const circle = document.createElement('span');
+                const diameter = Math.max(item.clientWidth, item.clientHeight);
+                const radius = diameter / 2;
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - item.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${e.clientY - item.getBoundingClientRect().top - radius}px`;
+                circle.classList.add('ripple');
+                const ripple = item.querySelector('.ripple');
+                if (ripple) { ripple.remove(); }
+                item.appendChild(circle);
+            }
+
             const targetId = item.getAttribute('data-global-target');
             switchGlobalView(targetId);
             
