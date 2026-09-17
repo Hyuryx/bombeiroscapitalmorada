@@ -1928,6 +1928,17 @@ body.no-effects *::after {
     -webkit-backdrop-filter: none !important;
 }
 
+/* Ensure elements that rely on animation for visibility are visible when effects are off */
+body.no-effects .global-view.active,
+body.no-effects .stagger-item,
+body.no-effects .card-evoluir, 
+body.no-effects .viaturas-card, 
+body.no-effects .hierarquia-card, 
+body.no-effects .regras-item, 
+body.no-effects .item-aviso {
+    opacity: 1 !important;
+}
+
 body.no-effects #particles-js {
     display: none !important;
 }
