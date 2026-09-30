@@ -1,6 +1,6 @@
 module.exports = async (req, res) => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const GITHUB_REPO = "Hyuryx/Bombeiros_Capital_Morada";
+  const GITHUB_REPO = "Hyuryx/bombeiroscapitalmorada";
   const FILE_PATH = "public/dados/avisos.json";
   
   // CORS configuration
