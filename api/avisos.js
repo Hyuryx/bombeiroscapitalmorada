@@ -24,10 +24,10 @@ module.exports = async (req, res) => {
     "User-Agent": "Painel-Avisos-App"
   };
 
-  // Auth Check para gravação de avisos:
+  // Auth Check para leitura e gravação de avisos (Proteção Total da API)
   const cookies = req.headers.cookie || "";
   const authCookie = cookies.split(';').find(c => c.trim().startsWith('auth_token='));
-  if (req.method === "POST" && !authCookie) {
+  if (!authCookie) {
     return res.status(401).json({ erro: "Acesso negado. Faça login primeiro." });
   }
 
